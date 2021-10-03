@@ -1,5 +1,5 @@
 {
-    "@default-port": 3000,
+    "@default-port": 5000,
     "@default-host": "localhost",
     "@auto-install-dependencies": true,
     "@auto-gitignore": false,

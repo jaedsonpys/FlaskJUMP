@@ -95,7 +95,21 @@ class CLI:
                 exit()
 
     def help_cli(self, cmd):
-        print('OK...')
+        print('''
+deactive:
+    auto-install-dependencies
+    auto-gitignore
+activate:
+    auto-install-dependencies
+    auto-gitignore
+set:
+    default:
+        port
+        host
+
+        Ex: set default port 5500
+init:
+    Ex: init HelloWorldProject''')
         pass
 
 
