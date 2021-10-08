@@ -1,0 +1,21 @@
+Uso: python3 main.py [comando] [opções/configuração]
+
+deactive:
+
+    auto-install-dependencies
+    auto-gitignore
+
+activate:
+
+    auto-install-dependencies
+    auto-gitignore
+    
+set:
+    default:
+        port
+        host
+
+    Ex: set default port 5500
+    
+init:
+    Ex: init HelloWorldProject

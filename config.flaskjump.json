@@ -1,7 +1,7 @@
 {
-    "@default-port": 5000,
-    "@default-host": "localhost",
+    "@default-port": 5500,
+    "@default-host": "0.0.0.0",
     "@auto-install-dependencies": true,
-    "@auto-gitignore": false,
+    "@auto-gitignore": true,
     "@default-directory": "/home/jaedson/FlaskJUMP-Projects"
 }

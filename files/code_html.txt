@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>FlaskJUMP</title>
+</head>
+<body>
+    <h1>Bem vindo ao seu projeto!</h1>
+    <p>Comece o código!</p>
+</body>
+</html>

@@ -2,9 +2,6 @@
 
 O FlaskJUMP é uma ferramenta que lhe permite criar projetos Flask de uma forma rápida e organizada! 📌
 
-[Meu instagram](https://instagram.com/jaedsonpys)
-[]
-
 ## ✅ **Vantagens do FlaskJUMP**
 
 - [x] Criar projetos rapidamente.
@@ -14,7 +11,7 @@ O FlaskJUMP é uma ferramenta que lhe permite criar projetos Flask de uma forma 
 
 ## 🧤 **Cabe como uma luva!**
 
-Em apenas alguns segundos você já consegue usar o ***FlaskJUMP*** de forma rápida e simples. Com o comando **-h** ou **--help** você tem acesso a todas as funcionalidades!
+Em apenas alguns segundos você já consegue usar o ***FlaskJUMP*** de forma rápida e simples. Com o comando **--help** você tem acesso a todas as funcionalidades!
 
 ## 🚀 **Versões**
 
@@ -25,4 +22,4 @@ Em apenas alguns segundos você já consegue usar o ***FlaskJUMP*** de forma rá
 
 ## 🔑 **Licensa**
 
-More...
+***Creative Commons Legal Code***

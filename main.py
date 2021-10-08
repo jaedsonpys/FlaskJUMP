@@ -18,49 +18,15 @@ from time import sleep
 # Comandos de inicialização:
 # 
 # init HelloWorld: Inicia um novo projeto dentro da pasta HelloWorld.
-#
-# update HelloWorld: Caso a instalação automática de dependencias estiver ativada, esse comando ira instalar todas as
-# dependencias pendentes. 
 # 
 # #
 
-code_app = '''
-# Bem vindo ao {}! 
-# Aproveite seu projeto ao máximo.#
-
-from flask import Flask, render_template
-
-app = Flask(__name__, template_folder="templates", static_folder="public")
-
-@app.route("/")
-def index():
-    return render_template("index.html")
-
-if __name__ == "__main__":
-    app.run(debug=True, port={}, host="{}")
-'''
-
-code_html = """
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <title>FlaskJUMP</title>
-</head>
-<body>
-    <h1>Bem vindo ao seu projeto!</h1>
-    <p>Comece o código!</p>
-</body>
-</html>
-"""
-
-code_ignore = """
-__pycache__/
-*.env
-venv/
-"""
-
 class CLI:
     def __init__(self):
+        if len(sys.argv) == 1:
+            print('\033[32m🔎 Digite -help para ver a lista de comandos!\033[m')
+            return
+
         self.commands = {
             '-help': self.help_cli,
             'set': self.set,
@@ -78,8 +44,6 @@ class CLI:
 
         self.config_flaskjump['@default-directory'] = f'{pwd.getpwuid(os.getuid()).pw_dir}/FlaskJUMP-Projects'
 
-        # print('\n\033[47;30m FlaskJUMP \033[m\n')
-
         for c, cmd in enumerate(sys.argv):
             if cmd == __file__:
                 continue
@@ -95,30 +59,20 @@ class CLI:
                 exit()
 
     def help_cli(self, cmd):
-        print('''
-deactive:
-    auto-install-dependencies
-    auto-gitignore
-activate:
-    auto-install-dependencies
-    auto-gitignore
-set:
-    default:
-        port
-        host
-
-        Ex: set default port 5500
-init:
-    Ex: init HelloWorldProject''')
-        pass
-
+        help_text = open('files/help.txt', 'r').read()
+        print(help_text)
 
     def save_changes(self):
+        'Salva as alterações e configurações do usuário'
+
         with open('config.flaskjump.json', 'w') as config:
             json.dump(self.config_flaskjump, config,indent=4)
+            config.close()
 
 
     def set(self, cmd):
+        'Com o comando SET, podemos alterar a porta e o host padrão'
+
         for c, cd in enumerate(cmd):
             if len(cmd) <= 1:
                 print('\033[32m🔎 Digite -help para ver a lista e comandos!\033[m')
@@ -161,13 +115,15 @@ init:
                 else:
                     self.config_flaskjump['@auto-install-dependencies'] = True
                     print(f'\033[32m✅: Instalação automática de dependencias foi ativado!\033[m')
+
                     self.save_changes()
             elif cd == 'auto-gitignore':
                 if self.config_flaskjump['@auto-gitignore']:
                     print(f'\033[32m✅: .gitignore automático já está ativado!\033[m')
                 else:
-                    self.config_flaskjump['@auto-install-dependencies'] = True
+                    self.config_flaskjump['@auto-gitignore'] = True
                     print(f'\033[32m✅: .gitignore automático foi ativado!\033[m')
+
                     self.save_changes()
             else:
                 print(f'\033[31m❌: {cd} não é reconhecido como um parâmetro do comando {cd} FlaskJUMP.\033[m')
@@ -202,6 +158,8 @@ init:
 
             
     def init_project(self, name):
+        'Inicia o projeto FlaskJUMP'
+
         print('\n\033[47;30m FlaskJUMP \033[m\n')
 
         init = Init(name[1])
@@ -237,6 +195,10 @@ class Init:
         
         self.project_name = project_name
 
+        self.code_app = open('files/code_app.txt', 'r').read()
+        self.code_html = open('files/code_html.txt', 'r').read()
+        self.code_ignore = open('files/code_ignore.txt', 'r').read()
+
     
     def createProject(self):
         try:
@@ -249,6 +211,7 @@ class Init:
 
     def createFolders(self):
         list_folder = ['public', 'templates', 'routes']
+
         for folder in list_folder:
             try:
                 os.mkdir(f'{self.root_directory}/{self.project_name}/{folder}')
@@ -265,24 +228,19 @@ class Init:
 
     def createFiles(self):
         with open(f'{self.root_directory}/{self.project_name}/app.py', 'w') as app:
-            c = code_app.format(self.project_name, self.default_port, self.default_host)
-            app.write(c)
+            code = self.code_app.format(self.project_name, self.default_port, self.default_host)
+            app.write(code)
 
         with open(f'{self.root_directory}/{self.project_name}/templates/index.html', 'w') as html:
-            html.write(code_html.strip())
+            html.write(self.code_html.strip())
 
         if self.auto_gitignore:
             with open(f'{self.root_directory}/{self.project_name}/.gitignore', 'w') as ignore:
-                ignore.write(code_ignore.strip())
+                ignore.write(self.code_ignore.strip())
 
         if self.auto_install_dependencies:
-            code_requirements = f"""
-            flask
-            werkzeug
-            """
-
             with open(f'{self.root_directory}/{self.project_name}/requirements.txt', 'w') as req:
-                req.write(code_requirements.strip())
+                req.write(self.code_ignore.strip())
 
         return True
 
